@@ -1,0 +1,26 @@
+env:
+  global:
+    - VERSION=0.${TRAVIS_BUILD_NUMBER}
+  matrix:
+
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  # update to the latest docker for multi-stage
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce
+
+script:
+  - docker build -t ${DOCKER_HUB_USER}/portainer-swarm-dind:latest -t ${DOCKER_HUB_USER}/portainer-swarm-dind:${VERSION} .
+  - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+  - docker push ${DOCKER_HUB_USER}/portainer-swarm-dind:latest
+  - docker push ${DOCKER_HUB_USER}/portainer-swarm-dind:${VERSION}
+
+branches:
+  only:
+    - master

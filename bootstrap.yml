@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  portainer:
+    image: portainer/portainer
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/management/portainer:/data"
+    ports:
+      - "9000:9000"
+    deploy:
+      replicas: 0
+      placement:
+        constraints:
+          - node.role == manager
+
