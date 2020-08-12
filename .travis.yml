@@ -16,7 +16,7 @@ before_install:
   - sudo apt-get -y install docker-ce
 
 script:
-  - docker build -t ${DOCKER_HUB_USER}/portainer-swarm-dind:latest -t ${DOCKER_HUB_USER}/portainer-swarm-dind:${VERSION} .
+  - docker build --squash -t ${DOCKER_HUB_USER}/portainer-swarm-dind:latest -t ${DOCKER_HUB_USER}/portainer-swarm-dind:${VERSION} .
   - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
   - docker push ${DOCKER_HUB_USER}/portainer-swarm-dind:latest
   - docker push ${DOCKER_HUB_USER}/portainer-swarm-dind:${VERSION}
