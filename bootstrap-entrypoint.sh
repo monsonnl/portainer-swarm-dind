@@ -4,15 +4,9 @@
 if [ -z "$STORAGE_DRIVER" ];
 then
   # STORAGE_DRIVER is unset or blank
-  rm /etc/docker/daemon.json 2>/dev/null
+  jq '.-{"storage-driver":""}' /etc/docker/daemon.json | sudo tee /etc/docker/daemon.json
 else
-
-  echo <<EOF >/etc/docker/daemon.json
-{
-  "storage-driver": "$STORAGE_DRIVER"
-}
-EOF
-
+  jq ".+{\"storage-driver\":\"$STORAGE_DRIVER\"}" /etc/docker/daemon.json | sudo tee /etc/docker/daemon.json
 fi
 
 # we need dockerd running to bootstrap the stack.  However, if we fork our bootstrap
