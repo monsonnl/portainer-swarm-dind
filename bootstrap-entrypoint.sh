@@ -17,7 +17,7 @@ nohup /usr/local/bin/dockerd-entrypoint.sh $@ & tail -f nohup.out &
 ( tail -f -n0 nohup.out & ) | grep -q "API listen on /var/run/docker.sock"
 
 # now lets do our initializations
-if [ "inactive" = "$(docker info 2>/dev/null | grep -i swarm | awk '{ print $2 }')" ];
+if [ "inactive" = "$(docker info 2>/dev/null | grep "Swarm:" | awk '{ print $2 }')" ];
 then
   docker swarm init --advertise-addr eth0
 fi
