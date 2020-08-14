@@ -19,7 +19,7 @@ nohup /usr/local/bin/dockerd-entrypoint.sh $@ & tail -f nohup.out &
 # now lets do our initializations
 if [ "inactive" = "$(docker info 2>/dev/null | grep "Swarm:" | awk '{ print $2 }')" ];
 then
-  docker swarm init --advertise-addr eth0
+  docker swarm init --advertise-addr $ADVERTISE_ADDR
 fi
 
 # if /management/portainer is empty or the stack is missing then bootstrap the management stack

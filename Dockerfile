@@ -1,5 +1,7 @@
 FROM docker:19-dind
 
+ENV ADVERTISE_ADDR=eth0
+
 RUN mkdir -p /management/portainer && \
     mkdir -p /management/mounts && \
     mkdir -p /management/confs && \
