@@ -38,7 +38,7 @@ then
   while [ "$(docker inspect --format='{{ .State.Running }}' portainer-bootstrap)" != "false" ]; do sleep 1; done
   docker rm portainer-bootstrap
   docker service scale management_portainer=1
-  ( docker sevice logs -f portainer-bootstrap 2>&1 & ) | grep -q "Starting Portainer .* on :9000"
+  ( docker sevice logs -f management_portainer 2>&1 & ) | grep -q "Starting Portainer .* on :9000"
   auth_token=$(http POST :9000/api/auth Username="admin" Password="changeme" | jq -r ".jwt")
   http PUT ":9000/api/stacks/1?endpointId=1" "Authorization: Bearer $auth_token" StackFileContent=@/docker/confs/management.yml
 fi
