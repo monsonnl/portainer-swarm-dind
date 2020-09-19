@@ -2,16 +2,16 @@ FROM docker:19-dind
 
 ENV ADVERTISE_ADDR=eth0
 
-RUN mkdir -p /management/portainer && \
-    mkdir -p /management/mounts && \
-    mkdir -p /management/confs && \
+RUN mkdir -p /docker/portainer && \
+    mkdir -p /docker/mounts && \
+    mkdir -p /docker/confs && \
     apk --no-cache add httpie jq
 
-COPY bootstrap.yml /management/confs/bootstrap.yml
-COPY management.yml /management/confs/management.yml
-COPY bootstrap-entrypoint.sh /management/bootstrap-entrypoint.sh
+COPY bootstrap.yml /docker/confs/bootstrap.yml
+COPY management.yml /docker/confs/management.yml
+COPY bootstrap-entrypoint.sh /docker/bootstrap-entrypoint.sh
 
-RUN chmod 755 /management/bootstrap-entrypoint.sh
+RUN chmod 755 /docker/bootstrap-entrypoint.sh
 
-ENTRYPOINT ["/management/bootstrap-entrypoint.sh"]
+ENTRYPOINT ["/docker/bootstrap-entrypoint.sh"]
 

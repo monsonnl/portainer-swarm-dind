@@ -5,7 +5,7 @@ services:
     image: portainer/portainer:alpine
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "/management/portainer:/data"
+      - "/docker/portainer:/data"
     ports:
       - "9000:9000"
     deploy:
